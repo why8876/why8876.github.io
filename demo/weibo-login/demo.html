@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="UTF-8">
+<title>仿微博登录框</title>
+<script type='text/javascript' src='tool.js'></script>
+<script type="text/javascript" src="base.js"></script>
+<script type="text/javascript" src="demo.js"></script>
+
+<link rel="stylesheet" href="demo.css">
+</head>
+
+<div id='header'>
+	<div class='logo'> <img src="#" alt="微博图片banner">  </div>
+	<div class='member'>个人中心
+		<ul>
+			<li><a href="###">设置</a></li> 
+			<li><a href="###">换肤</a></li> 
+			<li><a href="###">帮助</a></li> 
+			<li><a href="###">退出</a></li> 
+		</ul>
+	</div>
+	<div class='login'> 登录 </div>
+
+</div>
+
+ <!-- 只是一个登录框用不着提交，所以就没做成表单 -->
+ <!-- 正则表达式有点迷糊 -->
+<div id='login'>    
+	<!-- <h2><img src="../images/X.png" alt="" class='close'> 网站登录</h2> -->
+	<h2>网站登录<span class='close' z-index=999 style='position:absolute;left:300px;color:red'>&times;</span></h2>
+	<div class='user'>账号<input type="text" name='user'class='text'></div>
+	<div class='pass'>密码<input type="password" name='pass'class='text'></div>
+	<div class='button'><input type="button" class='button' value='登录'></div>
+	<div class='other'><a href="##">注册新用户</a>|<a href="##">忘记密码</a></div>
+
+</div>
+
+<div id='screen'></div>
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
