@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>网易新闻客户端</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel = "shortcut icon" href='img/net.ico'>
+	<style>
+		body{
+			background-color: black;
+		}
+		.navbar{
+			background-color: black;
+			border: none;
+			padding: 15px 0;
+		}
+		.navbar-header h1{
+			font-size: 22px;
+			color:#8A8A8A;
+			padding: 0 0 20px 10px;
+			display: inline-block;
+		}
+		.navbar img{
+			float: left;
+			padding-top: 8px;
+		}
+		.glyphicon{
+			color: #8A8A8A;
+			background-color: black;
+		}
+		.glyphicon-home{
+			color: #ECECEC;
+		}
+		.row{
+			background-color: white;
+		}
+		.row .col-md-12{
+			border-bottom: 10px solid black;
+		}
+		.row .media-body h4{
+			margin-left: 60px;
+			padding:40px;
+			letter-spacing: 5px;
+			font-size: 30px;
+			line-height: 1.3;
+			margin-bottom: -10px;	
+		}
+		.row .media-body p{
+			margin-left: 100px;
+			letter-spacing: 2px;
+			line-height: 2.8;	
+			color: #A1A1A1;
+		}
+
+		.row .special h4{
+			margin-left: 10px;
+			padding:40px;
+			letter-spacing: 5px;
+			font-size: 30px;
+			line-height: 1.3;
+			margin-bottom: -10px;	
+		}
+		.row .special p{
+			margin-left: 50px;
+			letter-spacing: 2px;
+			line-height: 2.8;	
+			color: #A1A1A1;				
+		}
+		#navbar-collapse ul{
+			margin-top: 0;
+			padding-top: 
+		}
+		.carousel-inner img{
+			margin: 0 auto;
+		}
+		.carousel-inner .carousel-caption h3{
+			line-height: 550px;
+		}
+		.carousel-inner{
+			padding-bottom:20px;
+		}
+		#myCarousel{
+			margin: -20px 0 -20px 0;
+		}
+		.carousel-control{
+			font-size: 100px;
+		}
+		.awards{
+			background: white;
+			text-align: center;
+			padding: 80px;
+			margin-top: -18px;
+		}
+		.brands{
+			text-align: center;
+			margin: 0 auto;
+			height: 170px;
+			background-color: #58595D;
+			line-height: 170px;
+		}
+		#footer{
+			background-color: black;
+			padding: 5px;
+			color: #5B5C5D;
+			text-align: center;
+			line-height: 30px;
+		}
+	</style>
+</head>
+<body>
+
+<nav class="navbar navbar-default nav-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<img src="img/logo.png" alt="网易logo">
+			<h1>网易新闻客户端</h1>
+			<button class='navbar-toggle' data-toggle='collapse' data-target='#navbar-collapse'>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+
+		<div class="collapse navbar-collapse" id='navbar-collapse'>
+			<ul class='nav navbar-nav navbar-right'>
+				<li><a href="index.html"><span class='glyphicon glyphicon-home'> 首页</span></a></li>
+				<li><a href="information.html"><span class='glyphicon glyphicon-list'> 下载</a></li>
+				<li><a href="case.html"><span class='glyphicon glyphicon-fire'> 关于我们</a></li>
+				<li><a href="about.html"><span class='glyphicon glyphicon-question-sign'> 联系我们</a></li>
+			</ul>			
+		</div>
+	</div>
+</nav>
+
+
+
+
+<div class="tab1">
+	<div class="container">
+		<div class='row'>
+			<div class="col-md-12 col col-sm-12">
+				<div class="media-left">
+					<img src="img/11.png" alt="图11" class='media-object'>
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading">新闻≠复制粘贴<br>我们试图距离真相 更近一步</h4>
+					<p>有趣,尖锐,独家,深度,在这里看到新闻另一面<br>同样的新闻,不一样的解读方式<br>可以诙谐幽默,也可以尖锐独到,更可以用数据说话彰显权威<br>网易精品原创栏目,总有一种解读适合你</p>
+				</div>
+			</div>
+			<div class="col-md-12 col col-sm-12">
+				<div class="media-left">
+					<img src="img/22.png" alt="图22" class='media-object'>
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading">网易跟贴大楼 深藏民间高手</h4>
+					<p>有人来这里看新闻,有人来这里看『大神』<br>盖楼作诗,槽点犀利,来网易跟贴,写出你的态度<br>我们激发每个人思考,态度就在你身上</p>
+				</div>
+			</div>
+			<div class="col-md-12 col col-sm-12 special">
+				<div class="media-left">
+					<img src="img/33.png" alt="图33" class='media-object'>
+				</div>
+				<div class="media-body">
+					<h4 class="media-heading">定制化阅读 更懂你的新闻资讯APP</h4>
+					<p>智能推送,给你真正感兴趣的资讯.海量订阅源,捍卫你自主选择的权力<br>拒绝千篇一律,给每个读者,更适合的资讯</p>
+				</div>
+			</div>					
+		</div>
+	</div>
+</div>
+
+<div id="myCarousel" class='carousel slide'>
+	<ol class='carousel-indicators'>
+		<li data-target='#myCarousel' data-slide-to='0'></li>
+		<li data-target='#myCarousel' data-slide-to='1'></li>
+		<li data-target='#myCarousel' data-slide-to='2'></li>
+		<li data-target='#myCarousel' data-slide-to='3'></li>
+		<li data-target='#myCarousel' data-slide-to='4'></li>
+		<li data-target='#myCarousel' data-slide-to='5'></li>
+		<li data-target='#myCarousel' data-slide-to='6'></li>
+		<li data-target='#myCarousel' data-slide-to='7'></li>
+	</ol>
+
+	<div class='carousel-inner'>
+		<div class='item active'>
+			<img src="img/carousel-1.jpg" alt="第一张">	
+			<div class='carousel-caption'>
+				<h3>'If you love something, set it free.'</h3>
+			</div>		
+		</div>
+		<div class='item'>
+			<img src="img/carousel-2.jpg" alt="第二张">
+			<div class='carousel-caption'>
+				<h3>' 存 善 心，结 善 缘'</h3>
+			</div>	
+		</div>
+		<div class='item'>
+			<img src="img/carousel-3.jpg" alt="第三张">
+			<div class='carousel-caption'>
+				<h3>' 音 乐 让 世 界 更 平 等 。'</h3>
+			</div>			
+		</div>
+		<div class='item'>
+			<img src="img/carousel-4.jpg" alt="第四张">
+			<div class='carousel-caption'>
+				<h3>' 让 环 保 从 名 词 变 成 动 词 。 '</h3>
+			</div>	
+		</div>
+		<div class='item'>
+			<img src="img/carousel-5.jpg" alt="第五张">
+			<div class='carousel-caption'>
+				<h3>' 我 的 人 生 态 度 是 传 递 快 乐。'</h3>
+			</div>	
+		</div>
+		<div class='item'>
+			<img src="img/carousel-6.jpg" alt="第六张">
+			<div class='carousel-caption'>
+				<h3>' 从 容 自 由 ， 像 棵 树 一 样 活 着 。'</h3>
+			</div>	
+		</div>
+		<div class='item'>
+			<img src="img/carousel-7.jpg" alt="第七张">
+			<div class='carousel-caption'>
+				<h3>'不 止 爱 情 ， 生 活 值 得 冒 险 。 '</h3>
+			</div>	
+		</div>
+		<div class='item'>
+			<img src="img/carousel-8.jpg" alt="第八张">
+			<div class='carousel-caption'>
+				<h3>' 没 有 什 么 比 过 程 更 重 要 。 '</h3>
+			</div>	
+		</div>
+	</div>
+	<a href="#myCarousel" data-slide='prev' class='carousel-control left'>&lsaquo;</a>
+	<a href="#myCarousel" data-slide='next' class='carousel-control right'>&rsaquo;</a>
+</div>
+
+<div class='awards'>
+			<div>
+				<img src="img/index_awards.jpg" alt="奖励">
+			</div>
+</div>
+
+<div class='brands'>
+	<img src="img/index_brands.png" alt="广告">
+</div>
+
+<footer id='footer'>
+	<div class='container'>
+		<p>© 1997-2015 网易公司版权所有</p>
+	</div>
+</footer>
+
+<script src='js/jquery.min.js'></script>
+<script src='js/bootstrap.min.js'></script>
+<script type='text/javascript'>
+	$(function(){
+		$('.carousel-control').css('line-height',$('.carousel-inner img').height()+'px');
+		$(window).resize(function(){
+			var $height=$('.carousel-inner img').eq(0).height()||
+						$('.carousel-inner img').eq(1).height()||
+						$('.carousel-inner img').eq(2).height()||
+						$('.carousel-inner img').eq(3).height()||
+						$('.carousel-inner img').eq(4).height()||
+						$('.carousel-inner img').eq(5).height()||
+						$('.carousel-inner img').eq(6).height()||
+						$('.carousel-inner img').eq(7).height();
+			$('.carousel-control').css('line-height',$height+'px');
+		});
+
+		$('#myCarousel').carousel({
+			interval:4000,
+		});
+
+
+		$('.text').css('margin-top',($('.auto').eq(0).height()-$('.text').eq(0).height())/2 +'px');
+
+		$(window).resize(function(){
+			$('.text').css('margin-top',($('.auto').eq(0).height()-$('.text').eq(0).height())/2 +'px');
+		});
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>网易新闻客户端</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel = "shortcut icon" href='img/net.ico'>
+	<style>
+		body{
+			background-color: black;
+		}
+		.navbar{
+			background-color: black;
+			border: none;
+			padding: 15px 0;
+		}
+		.navbar-header h1{
+			font-size: 22px;
+			color:#8A8A8A;
+			padding: 0 0 20px 10px;
+			display: inline-block;
+		}
+		.navbar img{
+			float: left;
+			padding-top: 8px;
+		}
+		.glyphicon{
+			color: #8A8A8A;
+			background-color: black;
+		}
+		.glyphicon-question-sign{
+			color: #ECECEC;
+		}
+		#navbar-collapse ul{
+			margin-top: 0;
+			padding-top: 
+		}
+
+		#footer{
+			background-color: black;
+			padding: 5px;
+			color: #5B5C5D;
+			text-align: center;
+			position: relative;
+			bottom: -60px;
+			left: auto;
+		}
+		#information{
+			background-color: #eee;
+			padding: 40px 0;
+		}
+		.jumbotron{
+			margin: -20px 0 0 0;
+		}
+		#about{
+			background-color: #eee;
+			padding: 40px 0;
+		}
+		#about a{
+			color: #0059b2;
+		}
+		#about .about{
+			background-color: white;
+			box-shadow: 2px 2px 5px #333;
+		}
+		#about h3{
+			color: #333;
+			font-size: 22px;
+			border-bottom: 1px solid #eee;
+			padding: 20px 0;
+			margin: 0 0 10px 0;
+		}
+		#about p{
+			line-height: 2;
+			font-size: 16px;
+
+		}
+	</style>
+</head>
+<body>
+
+<nav class="navbar navbar-default nav-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<img src="img/logo.png" alt="网易logo">
+			<h1>网易新闻客户端</h1>
+			<button class='navbar-toggle' data-toggle='collapse' data-target='#navbar-collapse'>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+
+		<div class="collapse navbar-collapse" id='navbar-collapse'>
+			<ul class='nav navbar-nav navbar-right'>
+				<li><a href="index.html"><span class='glyphicon glyphicon-home'> 首页</span></a></li>
+				<li><a href="information.html"><span class='glyphicon glyphicon-list'> 下载</a></li>
+				<li><a href="case.html"><span class='glyphicon glyphicon-fire'> 关于我们</a></li>
+				<li><a href="about.html"><span class='glyphicon glyphicon-question-sign'> 联系我们</a></li>
+			</ul>			
+		</div>
+	</div>
+</nav>
+
+<div class="jumbotron">
+	<div class="container">
+
+	</div>
+</div>
+
+<div id="about">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="list-group">
+					<a class='list-group-item' href="#1">机构介绍</a>
+					<a class='list-group-item' href="#2">加入我们</a>
+					<a class='list-group-item' href="#3">联系方式</a>
+				</div>
+			</div>
+			<div class="col-md-9 about">
+				<a name="1"></a>
+				<h3>机构简介</h3>
+				<p>我们是什么什么</p>
+				<a name="2"></a>
+				<h3>加入我们</h3>
+				<p>如和加入我们我们</p>
+				<a name="3"></a>
+				<h3>联系方式</h3>
+				<p>怎么联系我们我们</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+<footer id='footer'>
+	<div class='container'>
+		<p>© 1997-2015 网易公司版权所有</p>
+	</div>
+</footer>
+
+<script src='js/jquery.min.js'></script>
+<script src='js/bootstrap.min.js'></script>
+<script type='text/javascript'>
+
+</script>
+
+</body>
+</html>

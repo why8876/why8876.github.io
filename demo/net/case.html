@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>网易新闻客户端</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel = "shortcut icon" href='img/net.ico'>
+	<style>
+		body{
+			background-color: black;
+		}
+		.navbar{
+			background-color: black;
+			border: none;
+			padding: 15px 0;
+		}
+		.navbar-header h1{
+			font-size: 22px;
+			color:#8A8A8A;
+			padding: 0 0 20px 10px;
+			display: inline-block;
+		}
+		.navbar img{
+			float: left;
+			padding-top: 8px;
+		}
+		.glyphicon{
+			color: #8A8A8A;
+			background-color: black;
+		}
+		.glyphicon-fire{
+			color: #ECECEC;
+		}
+
+		#navbar-collapse ul{
+			margin-top: 0;
+		}
+
+		#footer{
+			background-color: black;
+			padding: 5px;
+			color: #5B5C5D;
+			text-align: center;
+			position: relative;
+			bottom: -60px;
+			left: auto;
+		}
+		#information{
+			background-color: #eee;
+			padding: 40px 0;
+		}
+		.jumbotron{
+			margin: -20px 0 0 0;
+		}
+		#case{
+			padding: 40px 0;
+			background-color: #eee;
+			text-align: center;
+		}
+		#case h4{
+			color: #666;
+			line-height: 1.6;
+		}
+	</style>
+</head>
+<body>
+
+<nav class="navbar navbar-default nav-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<img src="img/logo.png" alt="网易logo">
+			<h1>网易新闻客户端</h1>
+			<button class='navbar-toggle' data-toggle='collapse' data-target='#navbar-collapse'>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+
+		<div class="collapse navbar-collapse" id='navbar-collapse'>
+			<ul class='nav navbar-nav navbar-right'>
+				<li><a href="index.html"><span class='glyphicon glyphicon-home'> 首页</span></a></li>
+				<li><a href="information.html"><span class='glyphicon glyphicon-list'> 下载</a></li>
+				<li><a href="case.html"><span class='glyphicon glyphicon-fire'> 关于我们</a></li>
+				<li><a href="about.html"><span class='glyphicon glyphicon-question-sign'> 联系我们</a></li>
+			</ul>			
+		</div>
+	</div>
+</nav>
+
+<div class="jumbotron">
+	<div class="container">
+			<p>网易新闻客户端是网易公司为亿万用户打造的一款移动资讯类APP</p>
+			<p>内容涵盖新闻、财经、科技、娱乐、体育等多个资讯类别。自上线以来，网易新闻客户端以其专业、全面的新闻报道为用户提供24小时资讯服务，并通过提供精品阅读、开设原创栏目、建立用户积分体系和活动广场等创新形式获得了良好的用户口碑。</p>
+			<p>自上线以来，网易新闻客户端连续斩获APP Store“年度最佳资讯应用”、新周刊“年度最有价值手机APP”、南方报业“最佳网络应用”等70余项行业大奖。</p>
+			<p>至2015年第三季度，网易新闻客户端全平台累计用户量达3.6亿。</p>
+	</div>
+</div>
+
+
+
+<footer id='footer'>
+	<div class='container'>
+		<p>© 1997-2015 网易公司版权所有</p>
+	</div>
+</footer>
+
+<script src='js/jquery.min.js'></script>
+<script src='js/bootstrap.min.js'></script>
+
+</body>
+</html>
