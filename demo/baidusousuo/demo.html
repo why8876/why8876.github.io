@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>百度搜索</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.logo {
+			width: 270px;
+			height: 129px;
+			display: block;
+			margin: 30px auto;
+
+		}
+		.show {
+			width: 600px;
+			margin: 10px auto;
+		}
+		#text {
+			width: 500px;
+			height: 30px;
+			text-indent: 10px;
+			margin-right: 0;
+			margin-right: -10px;
+			border: 1px solid #999;
+			font-size: 16px;
+			font-family: 'Microsoft YaHei';
+		}
+		.but {
+			display: inline-block;
+			background-color: #39c;
+			width: 80px;
+			height: 29px;
+			cursor: pointer;
+			line-height: 30px;
+			text-align: center;
+			color: #fff;
+			font-size: 14px;
+			border: 1px solid #999;
+			padding: 1px 0;
+			position: relative;
+			top: -0.5px;
+
+		}
+		.but:hover{
+			background-color: #39c;
+		}
+		.search {
+			width: 498px;
+			border: 1px solid #999;
+			display: none;
+			margin-top: -3px;
+		}
+		.search ul li {
+			width: 498px;
+			height: 30px;
+			text-indent: 10px;
+			line-height: 30px;
+			list-style: none;
+		}
+		.search ul li a{
+			color: #000;
+			text-decoration: none;
+			display: block;
+		}
+		.search ul li a:hover {
+			background-color: #ddd;
+		}
+	</style>
+	<base target='_blank'>
+</head>
+<body>
+	
+	<img src='images/baidu.png' alt='百度logo' class='logo'>
+	<div class='show'>
+		<input type="text" id='text'>
+		<div class='but'>百度一下</div>
+		<div class='search'>
+			<ul>
+				
+			</ul>
+		</div>
+	</div>
+
+	<script>
+		var oText = document.getElementById('text');
+		var oSea = document.getElementsByClassName('search')[0];
+		var oUl = oSea.getElementsByTagName('ul')[0];
+		var oBut = document.getElementsByClassName('but')[0];
+		
+		oText.onkeyup = function() {
+			var val = this.value;   //获得文本框当前的值
+			val ? oSea.style.display = 'block' : oSea.style.display = 'none';  //判断当前值是否为空,隐式转换的问题 空字符串会转换成false
+			var os =document.createElement('script');
+			os.src = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+val+"&cb=xiao"
+			document.body.appendChild(os);   //在body加子节点
+		}
+		oBut.onclick = function() {
+			var oVal = oText.value;
+			window.open('http://www.baidu.com/s?wd='+oVal+''); 
+		}
+		function xiao(mjson){         //重写script访问的链接所返回的函数  数据就在这个函数的参数内 参数以
+			oUl.innerHTML = '';    //每次显示的时候将里面清空
+			for (var i = 0;i < mjson.s.length ;i ++) {
+				var oLi = document.createElement('li');
+				oLi.innerHTML = '<a href=https://www.baidu.com/s?wd='+mjson.s[i]+'>'+mjson.s[i]+'</a>'
+				oUl.appendChild(oLi);				
+			}
+		}
+
+	</script>
+
+
+
+</body>
+</html>

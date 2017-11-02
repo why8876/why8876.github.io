@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>刮刮卡效果</title>
+</head>
+<body>
+
+	<img src="images/success.png" alt="图" id='img'>
+
+	
+
+	<script>
+		var oImg = document.getElementById('img');
+		oImg.onload = function() {		   //需要监听图片是否加载完成  因为js解析img标签需要时间，否则会获取不到
+			var can = document.createElement('canvas');
+			can.style.position = 'absolute';
+			can.style.left = oImg.offsetLeft + 'px';
+			can.style.top = oImg.offsetTop + 'px';
+			can.width = oImg.width;
+			can.height = oImg.height;
+			oImg.parentNode.insertBefore(can, oImg);
+
+			//canvas绘图
+			var cxt = can.getContext("2d");
+			var img = new Image();     //用js生成图片对象 为了防止多张图片
+			img.src = 'images/play.png';
+			img.onload = function () {
+				cxt.drawImage(img,0,0);   //需要绘制的图，绘制的坐标x，绘制的坐标y
+			}
+
+			//鼠标事件
+			can.onmousedown = function(e) {
+				var e = e || window.event;
+				var x = e.pageX - can.offsetLeft;
+				var y = e.pageY - can.offsetTop;
+				this.style.cursor = 'pointer';
+				//绘制圆形 
+				cxt.beginPath();   //开始路径 每次绘画的时候重新起点
+				cxt.arc(x, y, 15, 0, Math.PI * 2, false);   //x,y圆心坐标 r半径 ，0-2π，false逆时针画
+				cxt.fillStyle = '#ccc';
+				cxt.fill();      //绘制一个实心圆
+				
+				this.onmousemove = function(e) {
+					var e = e || window.event;									
+					var x1 = e.clientX - can.offsetLeft;
+					var y1 = e.clientY - can.offsetTop;
+					cxt.lineCap = 'round';        //交叉点处理圆角  方法拐弯的时候变形					
+					cxt.beginPath();
+					//设置合成属性，让先后绘制的图形重复的部分不显示内容
+					cxt.globalCompositeOperation = 'destination-out';
+					cxt.moveTo(x, y);      //鼠标摁下去的坐标
+					cxt.lineTo(x1,y1);
+					cxt.stroke();          //触笔方法绘制线条
+					cxt.lineWidth = 30;
+					x = x1;
+					y = y1;       //改变x y的新起点 避免扇形
+
+				}
+				this.onmouseup = function() {
+					this.onmousemove = null;
+					this.onmouseup = null;
+				}
+			}
+		}
+
+
+	</script>
+</body>
+</html>

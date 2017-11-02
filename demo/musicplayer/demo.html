@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>移动播放器</title>
+	<meta name='viewport' content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum=1.0'>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		html {
+			position: relative;
+		}
+		@font-face {
+			font-family: 'iconfont';
+			src: url('iconfont/iconfont.eot');
+			src: url('iconfont/iconfont.eot?#iefix') format('embedded-opentype'),
+			url('iconfont/iconfont.woff') format('woff'),
+			url('iconfont/iconfont.ttf') format('truetype'),
+			url('iconfont/iconfont.svg#iconfont') format('svg');
+		}
+		.iconfont{
+			font-family:"iconfont" !important;
+			font-size:0.9rem;
+			font-style:normal;
+			-webkit-font-smoothing: antialiased;
+			-webkit-text-stroke-width: 0.2px;
+			-moz-osx-font-smoothing: grayscale;
+			color: #fff;
+			 
+		}
+		header {
+			width: 10rem;   /*全屏让它10倍*/
+			height: 2rem;
+			text-align: center;
+			color: #fff;
+			padding-bottom: 0.3rem;
+			margin: auto;
+		}
+		body {
+			background-color: #2c2c2c;
+		}
+		header h3 {
+			font-size: 0.5rem;
+			line-height: 1.3rem;
+		}
+		header p {
+			font-size: 0.5rem;
+		}
+		.singer {
+			width: 4rem;
+			height: 4rem;
+			border: 1px solid #fff;
+			margin: auto;
+			border-radius: 50%;
+
+		}
+		.singer div {
+			width: 3.6rem;
+			height: 3.6rem;
+			background: rgba(255,255,255,0.5);
+			border-radius: 50%;
+			margin: 0.2rem auto;
+		}
+		.singer div img {
+			width: 3.5rem;
+			height: 3.5rem;
+			border-radius: 50%;
+			margin: 0.06rem;
+		}
+		#text {
+			display: none;
+		}
+		.lrc {
+			height: 8rem;
+			margin: 0.1rem auto -0.9rem;
+			overflow: hidden;
+			text-align: center;
+			color: #fff;
+			font-size: 0.5rem;
+			line-height: 1.0rem;			
+		}
+		#text {
+			display: none;
+		}
+		.lrc #content {
+			position: relative;
+		}
+		.rotate {
+			animation:rot 10s linear infinite;
+		}
+		@keyframes rot{
+			to {
+				transform:rotate(360deg);
+			}
+		}
+		
+		.progress {
+			width: 9rem;
+			height: 0.1rem;
+			background-color: #fff;
+			opacity: 0.7;
+			position: absolute;
+			bottom: -13%;
+			left: 50%;
+			margin-top: -0.05rem;
+			margin-left: -4.5rem;
+		}		
+		.bg {
+			width: 0;
+			height: 0.1rem;
+			background-color: red;
+		}
+		.bar {          
+			width: 0.5rem;
+			height: 0.5rem;
+			background-color: #fff;
+			border-radius: 50%;
+			transform:translate(0rem, -0.3rem);  /*用css3的属性把播放圆点放进播放条内 硬件加速性能优于定位*/
+			
+		}
+
+		.btn {
+			width: 8rem;
+			height: 2rem;
+			overflow: hidden;
+			position: absolute;
+			bottom: -30%;
+			left: 60%;
+			margin-top: -2rem;
+			margin-left: -4rem;
+
+		}
+		.btn div {
+			float: left;
+			margin: 0.5rem;
+
+		}
+		.pause {
+			display: none;
+		}
+	</style>
+	<script>
+		
+	</script>
+</head>
+<body>
+	<header>
+		<h3>最熟悉的陌生人</h3>
+		<p>萧亚轩</p>
+	</header>
+
+	<section class='singer'>
+		<div>
+			<img src="images/singer.jpg" alt="图">
+		</div>
+	</section>
+	<div class='lrc'>
+		<div id='content'></div>
+	</div>
+	<textarea id='text'>
+		[00:00.00]最熟悉的陌生人
+		[00:03.00]
+		[00:09.00]
+		[00:11.00]词 : 姚谦 曲 : 柯肇雷
+		[00:13.00]
+		[00:18.00]还记得吗
+		[00:21.00]窗外那被月光染亮的海洋
+		[00:26.00]你还记得吗
+		[00:29.00]是爱让彼此把夜点亮
+		[00:35.00]为何后来我们 用沉默取代依赖
+		[00:41.00]曾经朗朗星空
+		[00:45.00]渐渐阴霾
+		[00:50.00]
+		[00:51.00]心碎离开
+		[00:53.00]转身回到最初荒凉里等待
+		[00:58.00]为了寂寞
+		[01:01.00]是否找个人填心中空白
+		[01:06.00]我们变成了世上
+		[01:10.00]最熟悉的陌生人
+		[01:13.00]今后各自曲折
+		[01:17.00]各自悲哀
+		[01:21.00]只怪我们爱得那么汹涌
+		[01:26.00]爱得那么深
+		[01:29.00]于是梦醒了 搁浅了 沉默了 挥手了
+		[01:34.00]却回不了神
+		[01:37.00]如果当初在交会时能忍住了
+		[01:42.00]激动的灵魂
+		[01:45.00]也许今夜我不会让自己在思念里
+		[01:51.00]沉沦
+		[01:54.00]
+		[01:55.00]心碎离开
+		[01:58.00]转身回到最初荒凉里等待
+		[02:03.00]为了寂寞
+		[02:06.00]是否找个人填心中空白
+		[02:11.00]我们变成了世上
+		[02:14.00]最熟悉的陌生人
+		[02:18.00]今后各自曲折
+		[02:21.00]各自悲哀
+		[02:25.00]只怪我们爱得那么汹涌
+		[02:30.00]爱得那么深
+		[02:34.00]于是梦醒了 搁浅了 沉默了 挥手了
+		[02:39.00]却回不了神
+		[02:42.00]如果当初在交会时能忍住了
+		[02:46.00]激动的灵魂
+		[02:50.00]也许今夜我不会让自己在思念里
+		[02:55.00]沉沦
+		[03:02.00]
+		[03:15.00]我们变成了世上最熟悉的陌生人
+		[03:22.00]今后各自曲折
+		[03:25.00]各自悲哀?
+		[03:28.00]只怪我们爱得那么汹涌
+		[03:34.00]爱得那么深
+		[03:38.00]于是梦醒了 搁浅了 沉默了 挥手了
+		[03:43.00]却回不了神
+		[03:46.00]如果当初在交会时能忍住了
+		[03:50.00]激动的灵魂
+		[03:54.00]也许今夜我不会让自己在思念里
+		[03:59.00]沉沦
+		[04:02.00]也许今夜我不会让自己在思念里
+		[04:10.00]沉沦
+	</textarea>	
+
+	<section class='progress'>	
+		<div class='bg'></div>
+		<div class='bar'></div>
+	</section>
+
+
+	<section class='btn'>
+		<div class='prev iconfont'>&#xe503;</div>
+		<div class='play iconfont'>&#xe607;</div>
+		<div class='pause iconfont'>&#xe63e;</div>
+		<div class='next iconfont'>&#xe615;</div>
+	</section>
+	
+	<audio src='music/最熟悉的陌生人.mp3' id='myMusic'></audio>
+
+
+
+
+
+
+	<script>
+	window.onload = function() {
+		document.getElementsByTagName('html')[0].style.fontSize = document.documentElement.clientWidth /10 + 'px';  //解决适配			
+		window.onresize = function(){
+			document.getElementsByTagName('html')[0].style.fontSize = document.documentElement.clientWidth /10 + 'px';  //解决适配		
+		}
+		var myMusic = document.getElementById('myMusic');
+		var oPlay = document.getElementsByClassName('play')[0];
+		var oPause = document.getElementsByClassName('pause')[0];
+		var oProgress = document.getElementsByClassName('progress')[0];
+		var oBar = document.getElementsByClassName('bar')[0];
+		var oBg = document.getElementsByClassName('bg')[0];
+		var oSinger = document.getElementsByClassName('singer')[0];
+		
+		var oContent = document.getElementById('content');
+		var oText = document.getElementById('text');
+		var lrc = oText.value;
+		
+		oPlay.onclick = function() {
+			myMusic.play();
+			oPause.style.display = 'block';
+			this.style.display = 'none';
+			oSinger.className = 'singer rotate'; 
+		}
+		oPause.onclick = function() {
+			myMusic.pause();
+			oPlay.style.display = 'block';
+			this.style.display = 'none';
+			oSinger.className = 'singer'; 
+		}
+		var w = oProgress.offsetWidth - oBar.offsetWidth;  //小圆点可以移动的距离
+		myMusic.addEventListener('timeupdate', function(){
+			var s = this.currentTime / this.duration;        //duration总时间
+			oBar.style.transform = 'translate('+ s * w + 'px,-0.3rem)';
+			oBg.style.width = s * w + 'px';
+		});
+
+		//触屏事件拖拽进度条
+		var x = 0, l = 0, _left = 0;         //把滑动事件封装成move后 把局部变量改为全局变量
+		oBar.addEventListener('touchstart',function(e){
+			var e = e || window.event;			
+			//获取手指按下去的位置
+			x = e.changedTouches[0].pageX;    //涉及当前事件的手指数
+			// l = oBar.offsetLeft;       //滑块原来的位置   (之后不能要了)
+			oBar.addEventListener('touchmove', move);    
+			oBar.addEventListener('touchend',function(){       //需要对滑动结束后解绑
+				oBar.removeEventListener('touchmove', move);
+				l = _left;
+			});
+		});
+
+
+		function move(e) {     //将滑动事件封装成函数 方便解绑
+			var e = e || window.event;
+			x1 = e.changedTouches[0].pageX;
+			_left = x1 - x + l;		//拖动的距离	
+			if (_left < 0) {
+				_left = 0;
+			}else if(_left > w){
+				_left = w;
+			}			
+			oBar.style.transform = 'translate('+ _left + 'px,-0.3rem)';
+			oBg.style.width = _left + 'px';
+			myMusic.currentTime = _left / w * myMusic.duration;
+			currentTime = parseInt(myMusic.currentTime);   //注意currentTime本身是字符串
+			pAll = document.getElementsByTagName('p');
+			cTime = document.getElementById(currentTime);
+			if (cTime) {      //所以这里没有引号
+				for (var i = 0; i < pAll.length; i ++) {
+					pAll[i].style.color = '#fff';
+					pAll[i].style.fontSize = '0.5rem';
+					pAll[i].style.fontWeight = 'normal';
+					pAll[i].style.backgroundColor = '#2c2c2c';
+					pAll[i].style.overflow = 'hidden';
+				}
+				cTime.style.color = 'orange';
+				cTime.style.fontSize = '0.65rem';
+				cTime.style.fontWeight = 'bold';
+				cTime.style.backgroundColor = '#444';
+				cTime.style.borderRadius = '2rem';
+      			// 如何让歌词继续往上移动？
+      			if (pAll[10 + n].id == currentTime) {        // 这里为了讲显示的歌词在中间部分显示
+      				oContent.style.top = - 0.1 * currentTime + 'rem';  	//每进来一次向上移动20
+      				n ++;
+      			}     			    							
+			}				
+		}
+
+		//有个bug 滑块拖延的问题, 硬件加速的问题。没有重新渲染，所以原来的值没变。因为滑块的初始值一直没变
+
+		var lrc = oText.value;
+		var lrc1 = lrc.split('[');		
+		for (var i = 0; i < lrc1.length; i ++) {
+			var lrc2 = lrc1[i].split(']');   //歌词处理部分
+			var lrc3 = lrc2[1];
+			var time = lrc2[0];               //时间轴处理部分			
+			var time1 = time.split('.');
+			var time2 = time1[0];			
+			var time3 = time2.split(':');			
+			var timeAll = time3[0] * 60 + time3[1] * 1;  //必须乘以1 否则是字符串类型
+			lrc3 ? oContent.innerHTML += '<p id='+timeAll+'>'+lrc3+'</p>' : '';   //将歌词中的undeined去掉  把timeAll拼接到p的id中实现同步			
+		}
+
+		//歌词同步
+		var pAll,currentTime,cTime;
+		var n = 0;         //用来记录歌词向上翻滚 注意要把n放在外面 放里面会无效
+		myMusic.addEventListener('timeupdate',lrcupdate);
+
+		function addEvent(obj,type,fn) {
+			obj.addEventListener ? obj.addEventListener(type,fn,false) : obj.attachEvent('on' + type,fn); 
+		}
+
+		function lrcupdate() {        //同步歌词
+			currentTime = parseInt(myMusic.currentTime);   //注意currentTime本身是字符串
+			pAll = document.getElementsByTagName('p');
+			cTime = document.getElementById(currentTime);
+			if (cTime) {      //所以这里没有引号
+				for (var i = 0; i < pAll.length; i ++) {
+					pAll[i].style.color = '#fff';
+					pAll[i].style.fontSize = '0.5rem';
+					pAll[i].style.fontWeight = 'normal';
+					pAll[i].style.backgroundColor = '#2c2c2c';
+					pAll[i].style.overflow = 'hidden';
+				}
+				cTime.style.color = 'orange';
+				cTime.style.fontSize = '0.65rem';
+				cTime.style.fontWeight = 'bold';
+				cTime.style.backgroundColor = '#444';
+				cTime.style.borderRadius = '2rem';
+
+
+      			// 如何让歌词继续往上移动？
+      			if (pAll[8 + n].id == currentTime) {        // 这里为了讲显示的歌词在中间部分显示
+      				oContent.style.top = -0.95* n + 'rem';  	//每进来一次向上移动20
+      				n ++;     					
+      			}     			    							
+			}
+
+		}
+	}	
+	</script>
+</body>
+</html>

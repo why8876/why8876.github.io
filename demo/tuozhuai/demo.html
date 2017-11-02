@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>拖拽效果</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			overflow: hidden;
+		}
+		#photo {
+			width: 680px;
+			margin: 0 auto;
+		}
+		#photo ul li {
+			list-style: none;
+			width: 200px;
+			height: 200px;
+			float: left;
+			margin: 10px;
+			border: 2px solid transparent; 
+		}
+
+	</style>
+</head>
+<body>
+	<div id='photo'>
+		<ul>
+			<li><img src="images/7.png" alt="图"></li>
+			<li><img src="images/2.png" alt="图"></li>
+			<li><img src="images/1.png" alt="图"></li>
+			<li><img src="images/6.png" alt="图"></li>
+			<li><img src="images/5.png" alt="图"></li>
+			<li><img src="images/4.png" alt="图"></li>
+			<li><img src="images/9.png" alt="图"></li>
+			<li><img src="images/3.png" alt="图"></li>
+			<li><img src="images/8.png" alt="图"></li>
+		</ul>
+	</div>
+
+	<script>
+	/*
+		过程:
+		0.把浮动布局改为定位布局
+		1.拖拽的功能
+		2.碰撞检测
+		3.计算碰撞成功的距离最近的li
+		4.鼠标抬起之后碰撞成功的两个li
+
+	*/	
+		//0.把浮动布局改为定位布局
+		var aLi = document.getElementsByTagName('li');
+		var arr = [];       //存储li的偏移量
+		var z = 1;
+		for (var m = 0; m < aLi.length; m ++) {
+			arr.push([aLi[m].offsetLeft, aLi[m].offsetTop]);   //将每一组数据变为一个数组
+		}
+
+		for (var i = 0; i < aLi.length; i ++) {
+			  
+			  aLi[i].style.position = 'absolute';
+			  aLi[i].style.left = arr[i][0] + 'px';
+			  aLi[i].style.top = arr[i][1] + 'px';
+			  aLi[i].style.margin = 0;      //这里是因为有个margin 重新获取了 可以去掉
+
+			  
+		}
+		
+		//拖拽的功能
+
+		for (var i = 0; i < arr.length; i ++) {
+			// aLi[i].index = i;
+			drag(aLi[i]);
+		}
+		function drag(obj) {
+			obj.onmousedown = function(ev) {
+				var ev = ev || window.event;
+				var x = ev.clientX;   //获取鼠标摁下去的坐标
+				var y =ev.clientY
+				var l = this.offsetLeft; //获取li的初始位置
+				var t = this.offsetTop;
+				//解决li的层级问题 因为有会覆盖的情况 浏览器按顺序解析 所以后面的图片层级要高 前面的图片会被覆盖 2种方案
+				/*
+				for (var j = 0; j < aLi.length; j ++) {
+					aLi[j].style.zIndex = 1;
+				}
+				this.style.zIndex = 10;         仍然会有之前的被后面覆盖的小问题
+				*/
+				this.style.zIndex = z ++;    //这里的z不用限制 因为点不到那时候
+				document.onmousemove = function(ev) {         //鼠标移动过程中
+					var ev = ev || window.event;
+					var _left = ev.clientX - x + l;    //计算li的新位置     ev.clientX-x 是变化量加上初始位置等于新位置
+					var _top = ev.clientY - y + t;
+					obj.style.left = _left + 'px';
+					obj.style.top = _top + 'px';
+					/*   这里要碰撞成功了再检测 可以放到下面成功里去
+					for (var k = 0; k < aLi.length; k ++) {         //要当前的图片跟其他所有的图片碰撞比较
+						if (impact(obj,aLi[k]) && obj != aLi[k]) {
+							aLi[k].style.border = '2px solid lightblue';
+						}
+					}
+					*/	
+			 		if (_left <= 0) obj.style.left = 0;
+			 		if (_top <= 0) obj.style.top = 0;
+			 		if (_left >= document.body.clientWidth - 200){
+			 			obj.style.left = document.body.clientWidth - 200 + 'px';
+			 		}
+
+
+					var oLi = nearLi(obj);
+					for (var j = 0; j < aLi.length; j ++) {
+						aLi[j].style.border = '2px solid transparent';		
+					}
+					if (oLi) {
+						oLi.style.border = '2px solid #000';	//这里会报错,因为鼠标一移动就会有个返回值需要加个判断	
+					}
+
+				}
+				document.onmouseup = function() {        //鼠标抬起的解绑事件
+					document.onmousemove = null;
+					document.onmouseup = null;
+				}
+				return false;       //这里是为了阻止图片的默认行为 需要放最后
+			}
+		}
+
+		//碰撞检测
+		function impact(obj1, obj2) {
+			//获取每个li的偏移值
+			var L1 = obj1.offsetLeft;
+			var R1 = L1 + obj1.offsetWidth;			
+			var T1 = obj1.offsetTop;
+			var B1 = T1 + obj1.offsetHeight;
+			var L2 = obj2.offsetLeft;
+			var R2 = L2 + obj2.offsetWidth;
+			var T2 = obj2.offsetTop;
+			var B2 = T2 + obj2.offsetHeight;	
+			if (B1 < T2 || T1 > B2 || L1 > R2 || R1 < L2) {
+				// console.log('没有碰撞');
+				return false;
+			}else {
+				// console.log('碰撞');
+				return true; 
+			}
+		}
+
+		//计算最小距离 两张图片左上角的距离
+		function nearLi(obj) {
+			var n = 100000000;          //中间量
+			var oLi = '';
+			for (var k = 0; k < aLi.length; k ++) {         //要当前的图片跟其他所有的图片碰撞比较
+				if (impact(obj,aLi[k]) && obj != aLi[k]) {
+					//比较计算距离最近的li 可利用数组的冒泡排序
+					var c = distance(obj, aLi[k]);
+					if (c < n) {        //第一次碰撞成功让n等于最小值
+						n = c;
+						oLi = aLi[k];     //目的是获取最小距离的li 并保存下来
+					}
+				}
+			}
+			return oLi;
+		}
+
+		//勾股定理计算斜边长度
+		function distance(obj1, obj2) {
+			var a = obj1.offsetLeft - obj2.offsetLeft;
+			var b = obj1.offsetTop - obj2.offsetTop;
+			return Math.pow(a * a + b * b,0.5);
+		}		
+	</script>
+
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>缓冲运动</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#box {
+			width: 200px;
+			height: 200px;
+			background-color: red;
+			position: absolute;
+			left: 0;
+			top: 0;
+			text-align: center;
+			line-height: 200px;
+			font-size: 30px;
+			color: #fff;
+		}
+		
+		#btn {
+			position: absolute;
+			top: 230px;
+		}
+		#reset {
+			position: absolute;
+			top: 230px;
+			left: 100px;
+		}
+		#box2 {
+			width: 200px;
+			height: 200px;
+			background-color: skyblue;
+			position: absolute;
+			left: 0;
+			top: 280px;
+			text-align: center;
+			line-height: 200px;
+			font-size: 30px;
+			color: #fff;
+		}		
+		#btn2 {
+			position: absolute;
+			top: 510px;
+		}
+		#reset2 {
+			position: absolute;
+			top: 510px;
+			left: 100px;
+		}		
+	</style>
+</head>
+<body>
+
+		<div id='box'>缓冲运动</div>
+		<div>
+			<input type="button" value='点击运动' id='btn'>
+			<input type="button" value='点击归位' id='reset'>
+		</div>	
+
+
+		<div id='box2'>匀速运动</div>
+		<div>
+			<input type="button" value='点击运动' id='btn2'>
+			<input type="button" value='点击归位' id='reset2'>
+		</div>		
+
+
+	<script>
+
+	var box = document.getElementById('box');
+	var btn = document.getElementById('btn');
+	var reset = document.getElementById('reset');
+	btn.onclick = function() {
+		move.goFast(box,{left:1000});
+	}
+	reset.onclick = function() {
+		box.style.left = 0;
+	}
+	btn2.onclick = function() {
+		move.goAve(box2,1000);
+	}
+	reset2.onclick = function() {
+		box2.style.left = 0;
+	}
+
+	//运动对象
+	var move = {
+		//缓冲运动
+		goFast: function(obj, json, fn) {
+	        clearInterval(obj.timer);
+	        obj.timer = setInterval(function () {
+	            var finish = true;
+	            for (var k in json) {
+	                if (k === "opacity") {
+	                    var leader = getStyle(obj, k) * 100;
+	                    var target = json[k] * 100;
+	                    var step = (target - leader) / 10;
+	                    step = step > 0 ? Math.ceil(step) : Math.floor(step);  //步长会除不尽 所以根据目标值向上或者下取整
+	                    leader = leader + step;
+	                    obj.style[k] = leader / 100;
+	                } else if (k === "zIndex") {
+	                    obj.style.zIndex = json[k];
+	                } else {
+	                    var leader = parseInt(getStyle(obj, k)) || 0;
+	                    var target = json[k];
+	                    var step = (target - leader) / 10;
+	                    step = step > 0 ? Math.ceil(step) : Math.floor(step);
+	                    leader = leader + step;
+	                    obj.style[k] = leader + "px";
+	                }
+	                if (leader != target) {
+	                    finish = false;
+	                }
+	            }
+	            if (finish) {
+	                clearInterval(obj.timer);
+	                if (fn) {
+	                    fn();
+	                }
+	            }
+	        }, 15);
+		},
+		//匀速运动
+		goAve: function(obj, target) {
+	        clearInterval(obj.timer);  
+	        var speed = target>obj.offsetLeft?10:-10;  
+	        obj.timer = setInterval(function () {  
+	            var val = target - obj.offsetLeft;  
+	            obj.style.left = obj.offsetLeft + speed + "px";  
+	            //因为步长有正有负，所有转换成绝对值来比较  
+	            if(Math.abs(val)<=Math.abs(speed)){  
+	                obj.style.left = target + "px";  
+	                clearInterval(obj.timer);  
+	            }  
+	        },30) 
+		}
+	}
+
+    function getStyle(obj, attr) {
+        return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj)[attr];
+    }
+	</script>
+</body>
+</html>

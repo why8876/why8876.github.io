@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>天猫放大镜效果</title>
+    <style>
+    	* {
+    		margin: 0;
+    		padding: 0;
+    	}
+    	#wrap {
+			width: 430px;
+			margin: 10px 0 0 150px;
+			position: relative;
+    	}
+    	.content {
+    		width: 430px;
+    		height: 430px;
+    		border: 1px solid #adcdef;
+    	}
+
+    	.list {
+    		width: 433px;
+    		height: 60px;
+    		margin-top: 5px;
+    		position: relative;
+    	}
+
+    	.left, .right {
+    		position: absolute;
+    		width: 22px;
+    		height: 32px;
+    		color: #adcdef;
+    		border: 1px solid #adcdef;
+    		text-decoration: none;
+    		line-height: 32px;
+    		top: 50%;
+    		margin-top: -16px;
+            text-align: center;
+    	}
+    	.left {
+    		left: 0;
+    	}
+    	.right {
+    		right: 0;
+    	}
+    	.img-list {
+    		width: 342px;
+    		height: 60px;
+    		margin: 0 auto;
+    		overflow: hidden;
+    		position: relative;
+    	}
+    	.img-list ul {
+    		width: 360px;
+    		height: 60px;
+    		position: absolute;
+    		top: 0;
+    		left: 0;
+    	}
+    	.img-list ul li {
+    		list-style: none;
+    		float: left;
+    		margin: 0 2px;
+    	}
+    	.img-list ul li img {
+    		border: 2px solid #fff;
+
+    	}
+    	.img-list ul li img:hover {
+    		border: 2px solid red;
+    	}
+    	.content .shadow {
+    		width: 180px;
+    		height: 180px;
+    		background-color: #adcdef;
+    		opacity: 0.5;
+    		position: absolute;
+    		display: none;
+            cursor: move;
+    	}
+    	.big {
+    		width: 500px;
+    		height: 500px;
+    		border: 1px solid red;
+    		position: absolute;
+    		top: 0;
+    		left: 431px;
+    		overflow: hidden;
+    		display: none;
+    	}
+    	.big img {
+    		position: absolute;
+    		left: 0;
+    		top: 0;
+    	}
+    </style>
+</head>
+<body>
+   
+	<div id='wrap'>
+		<div class='content'>
+			<img src='images/1m.jpg' alt='图'>
+			<div class='shadow'></div>
+		</div>
+		<div class='list'>
+			<a href="javascript:;" class='left'>&lt;</a>
+			<a href="javascript:;" class='right'>&gt;</a>
+			<div class='img-list'>
+                <ul class='img-ul'>
+                    <li>                       
+                        <img src="images/1s.jpg" alt="图1" msrc='images/1m.jpg' bsrc='images/1b.jpg'>   
+                    </li>
+                    <li>
+                        <img src="images/2s.jpg" alt="图2" msrc='images/2m.jpg' bsrc='images/2b.jpg'>
+                    </li>
+                    <li>
+                        <img src="images/3s.jpg" alt="图3" msrc='images/3m.jpg' bsrc='images/3b.jpg'>
+                    </li>
+                    <li>
+                        <img src="images/4s.jpg" alt="图4" msrc='images/4m.jpg' bsrc='images/4b.jpg'>
+                    </li>
+                    <li>
+                        <img src="images/5s.jpg" alt="图5" msrc='images/5m.jpg' bsrc='images/5b.jpg'>
+                    </li>
+                </ul>             
+			</div>
+		</div>
+		<div class='big'>
+            <img src='images/1b.jpg' alt="大图">
+		</div>
+	</div>
+    
+
+
+
+
+	<script>
+		var imgUl = document.getElementsByClassName('img-ul')[0];
+		var aLi = imgUl.getElementsByTagName('li');
+		var wrap = document.getElementById('wrap');
+		var content = document.getElementsByClassName('content')[0];
+		var mediumimg = content.getElementsByTagName('img')[0];
+		var shadow = document.getElementsByClassName('shadow')[0];
+        var big = document.getElementsByClassName('big')[0];
+		var bigimg = big.getElementsByTagName('img')[0];
+        var bigAll = big.getElementsByTagName('img');
+		//鼠标移入小图
+		for (var i = 0; i < aLi.length; i ++) {
+			aLi[i].onmouseover = function() {               
+				mediumimg.setAttribute('src',this.children[0].getAttribute('msrc'));  //js中用setAttribute给图片设置src 获取小图的中图属性然后赋值给中图的src
+                bigimg.setAttribute('src',this.children[0].getAttribute('bsrc'));
+			}
+		}
+
+		//鼠标移入中图
+		content.onmouseover = function() {
+			shadow.style.display = 'block';
+			big.style.display = 'block';
+		}
+		//鼠标移动
+	    content.onmousemove = function(e) {
+    		var e = e || window.event;      //兼容
+            //阴影框的移动
+    		var left = e.clientX - wrap.offsetLeft - shadow.offsetWidth/2;      //当前鼠标的x方向减去边框距离屏幕左边的距离的差 就是偏移量
+    		var top = e.clientY - wrap.offsetTop - shadow.offsetHeight/2;       //获取鼠标x y方向   shadow.offsetWidth/2 移到阴影中间位置
+            if (left < 0) {              //限制边界 左侧边界left=0,右侧边界为content的宽度减去shadow的宽度
+                left = 0;
+            }else if (left > content.offsetWidth - shadow.offsetWidth) {
+                left = content.offsetWidth - shadow.offsetWidth;
+            }
+            if (top < 0) {                                              //限制边界 左侧边界left=0,右侧边界为content的宽度减去shadow的宽度
+                top = 0;
+            }else if (top > content.offsetHeight - shadow.offsetHeight) {
+                top = content.offsetHeight - shadow.offsetHeight;
+            }
+			shadow.style.left = left + 'px';
+			shadow.style.top = top + 'px';
+            //用移动比例系数实现，大图左到右的极限距离除以小图左到右的极限距离为系数
+            scaleX = left * (bigimg.clientWidth - big.clientWidth)/(content.offsetHeight - shadow.offsetHeight);   //左侧到右侧的极限距离
+            scaleY = top * (bigimg.clientHeight - big.clientHeight)/(content.offsetHeight - shadow.offsetHeight);
+            bigimg.style.left = -scaleX + 'px';
+            bigimg.style.top = -scaleY + 'px';
+		}
+    
+        content.onmouseout = function() {
+            shadow.style.display = 'none';
+            big.style.display = 'none';
+        }
+
+       
+	</script>    
+</body>
+</html>

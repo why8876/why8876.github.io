@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>楼梯导航</title>
+    <style>
+        * {
+            margin:0;
+            padding:0;
+        }
+        body {
+            font-size: 40px;
+            text-align: center;
+        }
+        #header {
+            width: 100%;
+            height: 170px;
+            background-color: lightblue;
+            line-height: 170px;
+        }
+
+        #main {
+            width: 1000px;
+            margin:  0 auto;
+            background-color: #f96;
+        }
+        #main .section {
+            height: 400px;
+            font-size: 20px;
+            line-height: 400px;
+        }
+        #stairs {
+            position: absolute;
+            top: 230px;
+            left: 30px;
+            width: 50px;          
+            border: 1px solid purple; 
+            font-size: 14px;
+            background-color: #f6f9fa;
+            border: 1px solid #e5e9ef;
+            border-radius: 10px;
+            overflow: hidden;      /*解决小圆角未显示的bug*/
+        }
+        #stairs ul li {
+            list-style: none;
+            line-height: 32px;
+
+        }
+        #stairs ul li:hover {
+            background-color: lightblue;
+            color: #fff;
+        }
+        .current{
+            background-color: lightblue;
+            color: #fff;
+        }
+        #footer {
+            width: 100%;
+            height: 270px;
+            background-color: pink;
+            line-height: 270px;
+        }        
+    </style>
+</head>
+<body>
+    <div id='header'>广告区</div>
+    <div id='main'>
+        <div class='section' style='background-color:red;'>服装</div>
+        <div class='section' style='background-color:#fa3;'>家电</div>
+        <div class='section' style='background-color:#fb3;'>手机</div>
+        <div class='section' style='background-color:#fd3;'>电脑</div>
+        <div class='section' style='background-color:#fe3;'>食物</div>
+        <div class='section' style='background-color:#f23;'>母婴</div>
+        <div class='section' style='background-color:#fg3;'>图书</div>
+        <div class='section' style='background-color:#f13;'>汽车</div>
+        <div class='section' style='background-color:#f93;'>旅行</div>
+        <div class='section' style='background-color:#f33;'>健康</div>
+        <div class='section' style='background-color:#f43;'>生活</div>
+    </div>
+    <div id='footer'>信息区</div>
+    <div id='stairs'>
+        <ul>
+            <li>服装</li>
+            <li>家电</li>
+            <li>手机</li>
+            <li>电脑</li>
+            <li>食物</li>
+            <li>母婴</li>
+            <li>图书</li>
+            <li>汽车</li>
+            <li>旅行</li>
+            <li>健康</li>
+            <li>生活</li>
+        </ul>
+    </div>
+
+    <script src='js/jquery-3.2.1.min.js'></script>
+    <script>
+        var _top = $('#main').offset().top;   //获取主体内容距顶部距离
+        $(window).scroll(function(){
+            scrollTop = $(this).scrollTop(); //获取滚动条的高度
+            if (scrollTop >= _top) {
+                var sIndex = Math.floor((scrollTop - _top)/400);  //获取滚动元素对应的索引
+                $('#stairs ul li').eq(sIndex).addClass('current').siblings().removeClass('current');
+                $('#stairs').css({
+                    position:'fixed',
+                    top:'30px'
+                });   //改变css样式属性
+            }else {
+                $('#stairs').css({
+                    position:'position',
+                    top:'230px'
+                });
+            }           
+        });
+
+        $('#stairs ul li').click(function(){
+            var index = $(this).index();   //获取li的下标
+            $(this).stop(true).addClass('current').siblings().stop(true).removeClass('current');
+            $('body').stop(true).animate({
+                scrollTop: index * 400 + _top + 'px'               
+            },500);  //动画改变滚动条的高度
+
+        });
+
+
+    </script>
+</body>
+</html>

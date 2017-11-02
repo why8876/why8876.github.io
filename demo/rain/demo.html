@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>下雨</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body, html {
+			height: 100%;
+		}
+		canvas {
+			background-color: rgb(255, 255, 255);
+			display: block;  /*默认的垂直对齐方式*/
+		}
+	</style>
+</head>
+<body>
+	<canvas id='canvas'>请使用现代浏览器</canvas>
+	<script>
+		//对浏览器兼容requestAnimationFrame
+		window.requestAnimFrame = (function(){
+		  return  window.requestAnimationFrame       ||
+		          window.webkitRequestAnimationFrame ||
+		          window.mozRequestAnimationFrame    ||
+		          function( callback ){
+		            window.setTimeout(callback, 1000 / 60);
+		          };
+		})();
+		var can = document.getElementById('canvas');
+		var cxt = can.getContext("2d");
+		//获取浏览器窗口的宽高
+		var w = can.width = window.innerWidth;
+		var h = can.height = window.innerHeight;
+		//让画布的宽高跟随浏览器窗口的变化而变化
+		window.onresize = function() {
+			var w = can.width = window.innerWidth;
+			var h = can.height = window.innerHeight;			
+		}
+		//面向对象
+		var drops = [];  //用数组存储雨滴数
+		//创建雨滴对象
+		function Drop() {
+
+		}
+		//添加原型对象方法
+		Drop.prototype = {
+			init: function() {  //初始化方法，设置每个雨滴的初始属性
+				//设置坐标
+				this.x = random(0, w);
+				this.y = 0;
+				//x,y方向上的速度值
+				this.vy = random(5,6);
+				this.vx = random(1,3);
+				//雨滴下落的最大高度
+				this.l = random(0.8 * h, 0.9 * h);
+				//波纹的初始半径
+				this.r = 0.5;
+				// this.vr = 0.9;  //半径扩展的速度
+				this.vr = random(0.5,0.9);   //半径扩展的速度
+				//判断雨滴消失的透明度
+				this.a = 1;
+				this.va = 0.93;     //透明度变化系数
+			},
+			draw: function() {      //绘制图形
+				if (this.y > this.l) {    //雨滴下落到指定位置,开始绘制波纹
+					cxt.beginPath();   //初始路径 不然会重叠
+					cxt.arc(this.x, this.y, this.r, 0, Math.PI * 2, false);
+					// cxt.strokeStyle = 'rgb(0, 255, 255)';
+					cxt.strokeStyle = 'rgba(255, 255, 255,'+this.a+')';  //把圆环的透明度拼接进来
+					cxt.stroke();
+				}else { //绘制下落的雨滴
+					cxt.fillStyle = 'rgb(255, 255, 255)';
+					cxt.fillRect(this.x, this.y, 2, 5);					
+				}
+				this.update();
+			},
+			update: function() {      //更新雨滴坐标
+				if (this.y < this.l) {
+					this.y += this.vy;
+					this.x -= this.vx;
+				}else {   //雨滴到达指定位置开始绘制波纹
+					if (this.a > 0.3) {         //用透明度控制
+						this.r += this.vr; 
+						if (this.r > 10) {
+							this.a *= this.va;						
+						} 
+					}else {   //重新初始化
+ 						this.init();
+					}					
+				}				
+			}
+		}		
+		//实例化雨滴
+		for (var i = 0; i < 20 ; i ++) {		//每次最多产生的数量
+			setTimeout(function(){             //延迟添加雨滴 产生交错效果，每个雨滴初始化时间不一样
+				var drop = new Drop();
+				drop.init();
+				drops.push(drop);
+			}, i * 300)       //每一个延迟300ms
+		}
+		function move() {
+			//线绘制透明层再绘制雨滴
+			cxt.fillStyle = 'rgba(0, 0, 0, 0.1)';    //绘制雨滴尾巴
+			cxt.fillRect(0, 0, w, h);
+			for (var i = 0; i < drops.length; i ++) {
+				drops[i].draw();			
+			}
+			requestAnimFrame(arguments.callee);					
+		}	
+		move();
+		//生成随机数的方法
+		function random(min, max) {
+			return Math.random() * (max - min) + min;    //取最大与最小之间的随机数
+		}
+	</script>
+</body>
+</html>
